@@ -1,0 +1,18 @@
+{
+    "manifest_version": 3,
+    "name": "Tab Title Display",
+    "version": "1.0",
+    "description": "Displays the title of the current tab in the popup.",
+    "permissions": [
+      "activeTab"
+    ],
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "icon.png",
+        "48": "icon.png",
+        "128": "icon.png"
+      }
+    }
+  }
+  
