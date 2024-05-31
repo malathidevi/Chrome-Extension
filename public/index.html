@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Profile Scraper and POST Data to Server</title>
+    <style>
+      body {
+        width: 300px;
+        font-family: Arial, sans-serif;
+      }
+      #title {
+        margin-top: 20px;
+        font-weight: bold;
+      }
+      button {
+        margin-top: 30px;
+        margin-bottom: 30px;
+        padding: 5px 10px;
+        background-color: rgb(102, 102, 243);
+        margin: 20px;
+        width: 50%;
+        border: 3px solid green;
+        padding: 10px;
+      }
+      p {
+        font-size: large;
+        padding: 10px 10px;
+      }
+      .content {
+        font-size: large;
+        margin-top: 20px;
+      }
+      .dummy {
+        font-size: medium;
+      }
+    </style>
+</head>
+<body>
+    <h1>LinkedIn Profile Scraper and POST Data to Server</h1>
+    <p>Click the button below to get the Title of this tab!</p>
+    <button id="getTitleButton">Get Tab Title</button>
+    <button id="scrapeProfilesButton">Scrape LinkedIn Profiles</button>
+    <div class="dummy" id="demo"></div>
+    <div class="content" id="title"></div>
+
+    <h2>POST Data to Server</h2>
+    <form id="dataForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"><br><br>
+        <label for="url">URL:</label>
+        <input type="url" id="url" name="url"><br><br>
+        <label for="about">About:</label>
+        <input type="text" id="about" name="about"><br><br>
+        <label for="bio">Bio:</label>
+        <input type="text" id="bio" name="bio"><br><br>
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location"><br><br>
+        <label for="followerCount">Follower Count:</label>
+        <input type="number" id="followerCount" name="followerCount"><br><br>
+        <label for="connectionCount">Connection Count:</label>
+        <input type="number" id="connectionCount" name="connectionCount"><br><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('dataForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const formData = {
+                name: document.getElementById('name').value,
+                url: document.getElementById('url').value,
+                about: document.getElementById('about').value,
+                bio: document.getElementById('bio').value,
+                location: document.getElementById('location').value,
+                followerCount: document.getElementById('followerCount').value,
+                connectionCount: document.getElementById('connectionCount').value
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/api/data', { // Ensure the correct URL is used
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    const responseData = await response.json();
+                    console.log('Data submitted successfully:', responseData);
+                } else {
+                    console.error('Error submitting data:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Network error:', error);
+            }
+        });
+    </script>
+</body>
+</html>
