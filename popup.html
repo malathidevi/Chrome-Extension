@@ -1,52 +1,49 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Tab Title Display</title>
-    
+<head>
+    <title>LinkedIn Automation</title>
     <style>
-      body {
-    width: 300px;
-    font-family: Arial, sans-serif;
-    height: 300px;
-  }
-  
-  #title {
-    margin-top: 20px;
-    font-weight: bold;
-  }
-  
-  button {
-    margin-top: 30px;
-    margin-bottom: 30px;
-    padding: 5px 10px;
-    background-color: rgb(102, 102, 243);
-    margin: 20px;
-  width: 50%;
-  border: 3px solid green;
-  padding: 10px;
-
-  }
-  p {
-    font-size: large;
-    padding: 10px 10 px;
- 
-  }
-  .content{
-    font-size: large;
-    margin-top: 20px;
-
-  }
-  .dummy {
-    font-size: medium
-  }
+        body {
+            width: 300px;
+            font-family: Arial, sans-serif;
+            height: 500px;
+        }
+        button {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            padding: 5px 10px;
+            background-color: rgb(102, 102, 243);
+            margin: 20px;
+            width: 50%;
+            border: 3px solid green;
+            padding: 10px;
+        }
+        p {
+            font-size: large;
+            padding: 10px 10px;
+        }
+        .content {
+            font-size: large;
+            margin-top: 20px;
+        }
+        .dummy {
+            font-size: medium;
+        }
     </style>
-
-  </head>
-  <body>
+</head>
+<body>
     <p>Click the button below to get the Title of this tab!</p>
     <button id="getTitleButton">Get Tab Title</button>
     <div class="dummy" id="demo"></div>
     <div class="content" id="title"></div>
+
+    <p>Enter like count and comment count:</p>
+    <label for="likeCount">Like Count:</label>
+    <input type="number" id="likeCount" name="likeCount"><br><br>
+    <label for="commentCount">Comment Count:</label>
+    <input type="number" id="commentCount" name="commentCount"><br><br>
+    <button id="automateButton" disabled>Automate LinkedIn</button>
+
     <script src="popup.js"></script>
-  </body>
+</body>
 </html>
