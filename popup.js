@@ -1,28 +1,53 @@
-document.getElementById('captureButton').addEventListener('click', () => {
-  console.log('Capture button clicked');
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    if (tabs.length === 0) {
-      console.error('No active tab found');
-      return;
+document.addEventListener('DOMContentLoaded', function () {
+    const likeCountInput = document.getElementById('likeCount');
+    const commentCountInput = document.getElementById('commentCount');
+    const automateButton = document.getElementById('automateButton');
+document.getElementById('getTitleButton').addEventListener('click', () => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        const activeTab = tabs[0];
+        console.log(activeTab)
+          
+        const title = activeTab.title;
+        document.getElementById('demo').textContent = "Current Tab Title is: "
+          document.getElementById('title').textContent = title;
+        });
+      });
+    function toggleButtonState() {
+        automateButton.disabled = !(likeCountInput.value && commentCountInput.value);
     }
-    const tab = tabs[0];
-    console.log('Active tab found:', tab);
-    const invalidUrls = ['chrome://', 'https://chrome.google.com', 'https://chrome-devtools://'];
-    if (invalidUrls.some(url => tab.url.startsWith(url))) {
-      console.error('Cannot inject content script into restricted URLs:', tab.url);
-      // Show a message to the user
-      alert('Cannot capture screen on restricted pages like Chrome settings or extensions page.');
-      return;
-    }
-    chrome.scripting.executeScript({
-      target: { tabId: tab.id },
-      files: ['content.js']
-    }, () => {
-      if (chrome.runtime.lastError) {
-        console.error('Script injection failed:', chrome.runtime.lastError);
-      } else {
-        console.log('Content script injected');
-      }
+
+    likeCountInput.addEventListener('input', toggleButtonState);
+    commentCountInput.addEventListener('input', toggleButtonState);
+
+    automateButton.addEventListener('click', function () {
+        const likeCount = parseInt(likeCountInput.value, 10);
+        const commentCount = parseInt(commentCountInput.value, 10);
+
+        chrome.runtime.sendMessage({ action: 'automate', likeCount, commentCount });
+
+        chrome.tabs.create({ url: 'https://www.linkedin.com/feed/' });
     });
-  });
+
+    getTitleButton.addEventListener('click', function () {
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            if (tabs.length > 0) {
+                chrome.scripting.executeScript(
+                    {
+                        target: { tabId: tabs[0].id },
+                        function: () => document.title
+                    },
+                    (results) => {
+                        if (results && results[0] && results[0].result) {
+                            titleDiv.textContent = 'Title: ' + results[0].result;
+                        } else {
+                            titleDiv.textContent = 'Could not retrieve title';
+                        }
+                    }
+                );
+            }
+        });
+    });
+
+    // Initialize the button state on load
+    toggleButtonState();
 });
