@@ -1,19 +1,19 @@
 {
   "manifest_version": 3,
-  "name": "LinkedIn Profile Scraper",  
+  "name": "Screen Capture Extension",
   "version": "1.0",
-  "description": "Scrapes profile data from LinkedIn profiles.",
-  "permissions": [
-    "activeTab",
-    "scripting"          
-  ],
+  "description": "Capture screen content",
+  "permissions": ["desktopCapture", "activeTab", "scripting"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
   "content_scripts": [
     {
-      "matches": ["*://www.linkedin.com/in/*"],  
+      "matches": ["<all_urls>"],
       "js": ["content.js"]
     }
-  ],
-  "action": {
-    "default_popup": "popup.html"   
-  }
+  ]
 }
